@@ -44,7 +44,8 @@ class _MainScreenViewState extends State<MainScreenView> {
   XFile? _mediaFile;
   VideoPlayerController? _videoController;
   final TextEditingController _captionController = TextEditingController();
-  final BehaviorSubject<bool> _isUploading = BehaviorSubject<bool>.seeded(false);
+  final BehaviorSubject<bool> _isUploading =
+      BehaviorSubject<bool>.seeded(false);
 
   @override
   void dispose() {
@@ -71,11 +72,12 @@ class _MainScreenViewState extends State<MainScreenView> {
           _videoController = null;
 
           if (isVideo) {
-            _videoController = VideoPlayerController.file(File(pickedFile!.path))
-              ..initialize().then((_) {
-                setState(() {});
-                _videoController?.play();
-              });
+            _videoController =
+                VideoPlayerController.file(File(pickedFile!.path))
+                  ..initialize().then((_) {
+                    setState(() {});
+                    _videoController?.play();
+                  });
           }
         },
       );
@@ -159,7 +161,8 @@ class _MainScreenViewState extends State<MainScreenView> {
             : _mediaFile!.path.endsWith('.mp4') ||
                     _mediaFile!.path.endsWith('.mov') ||
                     _mediaFile!.path.endsWith('.MOV')
-                ? _videoController != null && _videoController!.value.isInitialized
+                ? _videoController != null &&
+                        _videoController!.value.isInitialized
                     ? ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: AspectRatio(
@@ -182,15 +185,17 @@ class _MainScreenViewState extends State<MainScreenView> {
   void _sendContent() {
     String caption = _captionController.text.trim();
     if (_mediaFile != null) {
-      if (_mediaFile!.path.endsWith('.mp4') || _mediaFile!.path.endsWith('.mov') || _mediaFile!.path.endsWith('.MOV')) {
+      if (_mediaFile!.path.endsWith('.mp4') ||
+          _mediaFile!.path.endsWith('.mov') ||
+          _mediaFile!.path.endsWith('.MOV')) {
         _isUploading.add(true);
-        final res =
-            context.read<MainScreenCubit>().postVideoToLocket(widget.userProfile!, File(_mediaFile!.path), caption);
+        final res = context.read<MainScreenCubit>().postVideoToLocket(
+            widget.userProfile!, File(_mediaFile!.path), caption);
         _isUploading.add(false);
       } else {
         _isUploading.add(true);
-        final res =
-            context.read<MainScreenCubit>().postImageToLocket(widget.userProfile!, File(_mediaFile!.path), caption);
+        final res = context.read<MainScreenCubit>().postImageToLocket(
+            widget.userProfile!, File(_mediaFile!.path), caption);
         _isUploading.add(false);
       }
     } else {
@@ -275,10 +280,12 @@ class _MainScreenViewState extends State<MainScreenView> {
               height: 24,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(color: Color(Constants.yellowColor), width: 2),
+                border:
+                    Border.all(color: Color(Constants.yellowColor), width: 2),
               ),
               child: ClipOval(
-                child: (widget.userProfile?.profilePicture != null || widget.userProfile!.profilePicture.isNotEmpty)
+                child: (widget.userProfile?.profilePicture != null ||
+                        widget.userProfile!.profilePicture.isNotEmpty)
                     ? Image.network(
                         widget.userProfile!.profilePicture,
                         width: 24,
@@ -328,7 +335,8 @@ class _MainScreenViewState extends State<MainScreenView> {
               ),
               decoration: InputDecoration(
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Color(Constants.yellowColor), width: 2.0),
+                  borderSide: BorderSide(
+                      color: Color(Constants.yellowColor), width: 2.0),
                 ),
                 hintText: "Enter your caption here",
                 hintStyle: TextStyle(
@@ -370,7 +378,10 @@ class _MainScreenViewState extends State<MainScreenView> {
                 ? const CircularProgressIndicator(color: Colors.black)
                 : const Text(
                     "Send!",
-                    style: TextStyle(color: Color(0xff1f1d1a), fontSize: 22, fontWeight: FontWeight.w900),
+                    style: TextStyle(
+                        color: Color(0xff1f1d1a),
+                        fontSize: 22,
+                        fontWeight: FontWeight.w900),
                   );
           },
         ),
